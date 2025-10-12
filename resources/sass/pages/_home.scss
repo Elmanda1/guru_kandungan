@@ -1,0 +1,41 @@
+#home {
+    #introduction {
+        background-image: url("/public/assets/images/gradient.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        padding-top: 96px;
+        padding-bottom: 96px;
+
+        .heading {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-top: 55px;
+
+            > span:nth-of-type(2) {
+                font-style: italic;
+            }
+        }
+
+        @media screen and (max-width: map-get($container-max-widths, 'lg')) {
+            text-align: center;
+
+            .heading {
+                font-size: 2.25rem;
+                margin-top: 0;
+
+                .heading > span:nth-of-type(2) {
+                    font-size: 1.6rem;
+                }
+            }
+
+            p {
+                font-size: 1rem;
+            }
+        }
+    }
+
+    #benefit .col-md-4 {
+        margin: 20px 0;
+    }
+}
