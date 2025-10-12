@@ -38,7 +38,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [CourseScheduleController::class, 'guestList'])->name('home');
+// Halaman utama diarahkan ke jadwal pembelajaran
+Route::get('/', [CourseScheduleController::class, 'guestList'])->name('course-schedule.public');
+Route::get('/beranda', HomeController::class)->name('home');
+Route::get('/course-schedule', [CourseScheduleController::class, 'guestList'])->name('course-schedule.guest-list');
 Route::get('/privacy-policy', PrivacyPolicyController::class)->name('privacy-policy');
 Route::get('/term-of-service', TermOfServiceController::class)->name('term-of-service');
 Route::get('/contact-us', ContactUsController::class)->name('contact-us');

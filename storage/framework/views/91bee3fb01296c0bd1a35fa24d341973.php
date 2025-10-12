@@ -230,29 +230,26 @@
             <div class="offcanvas-body" style="min-height: 92px">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link p-3 <?php echo e(request()->is('/') ? 'active' : ''); ?>" href="<?php echo e(route('home')); ?>">
-                            <?php echo e(__('Home')); ?>
+                        <a class="nav-link p-3 <?php echo e(request()->routeIs('home') ? 'active' : ''); ?>" href="<?php echo e(route('home')); ?>">
+                            <?php echo e(__('Beranda')); ?>
 
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link p-3 <?php echo e(request()->is('contact-us') ? 'active' : ''); ?>"
+                        <a class="nav-link p-3 <?php echo e(request()->routeIs('contact-us') ? 'active' : ''); ?>"
                            href="<?php echo e(route('contact-us')); ?>">
-                            <?php echo e(__('Contact Us')); ?>
+                            <?php echo e(__('Hubungi Kami')); ?>
 
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link p-3 <?php echo e(request()->is('/') || request()->routeIs('course-schedule.public') ? 'active' : ''); ?>"
+                           href="<?php echo e(route('course-schedule.public')); ?>">
+                            <?php echo e(__('Jadwal Pembelajaran')); ?>
 
-                    <?php if(auth()->user() && auth()->user()->isProfileComplete() && auth()->user()->isRegistrationComplete()): ?>
-                        <li class="nav-item">
-                            <a class="nav-link p-3 <?php echo e(request()->is('course-schedule*') ? 'active' : ''); ?>"
-                               href="<?php echo e(route('course-schedule.guest-list')); ?>">
-                                <?php echo e(__('Course Schedule')); ?>
-
-                            </a>
-                        </li>
-                    <?php endif; ?>
+                        </a>
+                    </li>
                 </ul>
 
                 <ul id="login-nav" class="navbar-nav justify-content-end flex-grow-1 mt-5 mt-lg-0">
