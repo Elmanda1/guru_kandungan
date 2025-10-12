@@ -25,10 +25,10 @@
 
     <div class="col-12 col-lg-8 offset-lg-2">
         @foreach([
+            ['icon' => 'fas fa-book', 'label' => 'Topik', 'value' => $course->topic?->name],
                               ['icon' => 'fas fa-book', 'label' => 'Judul', 'value' => $course->title],
-                              ['icon' => 'fas fa-book', 'label' => 'Topik', 'value' => $course->topic?->name],
-                              ['icon' => 'fas fa-graduation-cap', 'label' => 'Jenjang Pendidikan', 'value' => $course->courseEducationLevels->pluck('educationLevel.name')->join(', ')],
                               ['icon' => 'fas fa-info-circle', 'label' => 'Deskripsi', 'value' => $course->description],
+                              ['icon' => 'fas fa-graduation-cap', 'label' => 'Scope Audience', 'value' => $course->courseEducationLevels->pluck('educationLevel.name')->map(fn($name) => 'Peserta ' . $name)->join(', ')],
                               ['icon' => 'far fa-calendar', 'label' => 'Tanggal', 'value' => Carbon::parse($course->date)->translatedFormat('l, d F Y')],
                               ['icon' => 'far fa-clock', 'label' => 'Waktu', 'value' => substr($course->start_time, 0, 5) . ' - Selesai'],
                               ['icon' => 'fas fa-users', 'label' => 'Kuota', 'value' => $course->is_done ? '-' : $course->quota . ' Peserta'],
