@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Jobs\CourseEnrollmentMailJob;
 use App\Models\Course;
 use App\Models\CourseParticipant;
+use Carbon\Carbon;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class CourseScheduleController extends Controller
@@ -19,11 +21,19 @@ class CourseScheduleController extends Controller
         if (request()->has('done')) {
             $query->where('status', Course::STATUS_DONE);
         } else {
-            $query->where('status', Course::STATUS_AVAILABLE);
+            // HANYA TAMPILKAN ACARA YANG BELUM LEWAT TANGGALNYA
+            $query->where('status', Course::STATUS_AVAILABLE)
+                  ->where('date', '>=', Carbon::today()->toDateString());
         }
 
         if ($search) {
-            $query->where('title', 'like', '%'.$search.'%');
+            // Logika pencarian disamakan dengan live search
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', '%'.$search.'%')
+                  ->orWhereHas('lecturer', function ($subq) use ($search) {
+                      $subq->where('name', 'like', '%'.$search.'%');
+                  });
+            });
         }
 
         return view('course-schedule.guest.list', [
@@ -52,11 +62,19 @@ class CourseScheduleController extends Controller
         if (request()->has('done')) {
             $query->where('status', Course::STATUS_DONE);
         } else {
-            $query->where('status', Course::STATUS_AVAILABLE);
+            // HANYA TAMPILKAN ACARA YANG BELUM LEWAT TANGGALNYA
+            $query->where('status', Course::STATUS_AVAILABLE)
+                  ->where('date', '>=', Carbon::today()->toDateString());
         }
 
         if ($search) {
-            $query->where('title', 'like', '%'.$search.'%');
+             // Logika pencarian disamakan dengan live search
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', '%'.$search.'%')
+                  ->orWhereHas('lecturer', function ($subq) use ($search) {
+                      $subq->where('name', 'like', '%'.$search.'%');
+                  });
+            });
         }
 
         return view('course-schedule.app.list', [
@@ -123,5 +141,34 @@ class CourseScheduleController extends Controller
 
             return redirect()->back()->with('alert_error', 'Gagal membatalkan pendaftaran');
         }
+    }
+
+    public function search(Request $request)
+    {
+        $searchQuery = $request->input('query');
+        $statusFilter = $request->input('status');
+
+        $courses = Course::query();
+
+        if ($statusFilter === 'done') {
+            $courses->where('status', Course::STATUS_DONE);
+        } else {
+            // Default ke 'available' dan tambahkan filter tanggal
+            $courses->where('status', Course::STATUS_AVAILABLE)
+                    ->where('date', '>=', Carbon::today()->toDateString());
+        }
+
+        if ($searchQuery) {
+            $courses->where(function ($query) use ($searchQuery) {
+                $query->where('title', 'LIKE', "%{$searchQuery}%")
+                      ->orWhereHas('lecturer', function ($q) use ($searchQuery) {
+                          $q->where('name', 'LIKE', "%{$searchQuery}%");
+                      });
+            });
+        }
+    
+        $results = $courses->latest()->get();
+
+        return view('course-schedule.guest._course_list', ['courses' => $results]);
     }
 }
