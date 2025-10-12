@@ -92,26 +92,23 @@
             <div class="offcanvas-body" style="min-height: 92px">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link p-3 {{ request()->is('/') ? 'active' : '' }}" href="{{ route('home') }}">
-                            {{ __('Home') }}
+                        <a class="nav-link p-3 {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">
+                            {{ __('Beranda') }}
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link p-3 {{ request()->is('contact-us') ? 'active' : '' }}"
+                        <a class="nav-link p-3 {{ request()->routeIs('contact-us') ? 'active' : '' }}"
                            href="{{ route('contact-us') }}">
-                            {{ __('Contact Us') }}
+                            {{ __('Hubungi Kami') }}
                         </a>
                     </li>
-
-                    @if(auth()->user() && auth()->user()->isProfileComplete() && auth()->user()->isRegistrationComplete())
-                        <li class="nav-item">
-                            <a class="nav-link p-3 {{ request()->is('course-schedule*') ? 'active' : '' }}"
-                               href="{{ route('course-schedule.guest-list') }}">
-                                {{ __('Course Schedule') }}
-                            </a>
-                        </li>
-                    @endif
+                    <li class="nav-item">
+                        <a class="nav-link p-3 {{ request()->is('/') || request()->routeIs('course-schedule.public') ? 'active' : '' }}"
+                           href="{{ route('course-schedule.public') }}">
+                            {{ __('Jadwal Pembelajaran') }}
+                        </a>
+                    </li>
                 </ul>
 
                 <ul id="login-nav" class="navbar-nav justify-content-end flex-grow-1 mt-5 mt-lg-0">
