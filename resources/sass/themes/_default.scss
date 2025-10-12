@@ -1,0 +1,46 @@
+#default {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-top: 92px;
+
+
+    .offcanvas {
+        @media screen and (max-width: map-get($container-max-widths, 'xl')) {
+            background-color: $primary;
+        }
+
+        .offcanvas-header {
+            box-shadow: 0 0.125rem 0 rgba(255, 255, 255, 0.075);
+        }
+
+        .offcanvas-body {
+            @media screen and (max-width: map-get($container-max-widths, 'sm')) {
+                padding: 32px 0;
+            }
+        }
+    }
+
+    @media screen and (max-width: map-get($container-max-widths, 'sm')) {
+        padding-top: 60px;
+    }
+
+    #login-nav {
+        @media screen and (max-width: map-get($container-max-widths, 'sm')) {
+            border-top: var(--cui-border-width) var(--cui-border-style) var(--cui-border-color) !important;
+        }
+
+        .nav-link {
+            &[data-coreui-toggle] {
+                &:hover {
+                    color: $black;
+                }
+            }
+        }
+    }
+
+    footer {
+        padding-top: 64px;
+        padding-bottom: 16px;
+    }
+}

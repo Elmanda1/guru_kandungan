@@ -1,0 +1,36 @@
+#calendar {
+    .calendar-header-day, .calendar-day, .day {
+        font-size: 14px !important;
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+    }
+}
+
+.royal-navy .calendar-events,
+.royal-navy .calendar-months,
+.royal-navy .calendar-year {
+    background-color: $primary;
+}
+
+.royal-navy th[colspan="7"] {
+    color: $primary;
+}
+
+.royal-navy .calendar-sidebar {
+    background-color: $primary;
+    -webkit-box-shadow: 5px 0 18px -3px $primary;
+    box-shadow: 5px 0 18px -3px $primary;
+}
+
+.royal-navy .calendar-sidebar > span#sidebarToggler {
+    background-color: $warning;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    padding-top: 4px;
+}
+
+.royal-navy #eventListToggler {
+    background-color: $warning;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}

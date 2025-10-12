@@ -1,0 +1,32 @@
+@import "@coreui/coreui/scss/coreui";
+
+.shadow-bottom {
+    box-shadow: 0 0.125rem 0 rgba(8, 10, 12, 0.075)
+}
+
+.row-gap-24 {
+    row-gap: 24px;
+}
+
+.row-gap-32 {
+    row-gap: 32px;
+}
+
+.row-gap-48 {
+    row-gap: 48px;
+}
+
+.avatar-80 {
+    height: 80px;
+    width: 80px;
+}
+
+
+.fs-20 {
+    font-size: 20px;
+}
+
+.royal-navy .event-container:hover {
+    background-color: $warning;
+    color: $primary;
+}

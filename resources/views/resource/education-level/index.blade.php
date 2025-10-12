@@ -1,0 +1,244 @@
+@extends('layouts.app')
+
+@section('content')
+    <div class="row row-gap-24">
+        <div class="col-12">
+            <div class="row row-gap-3">
+                <div class="col-12 col-lg-6">
+                    <x-section.app.page-title title="{{ $title }}"/>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="text-lg-end">
+                        <button
+                            class="btn btn-primary"
+                            data-coreui-toggle="modal"
+                            data-coreui-target="#createModal"
+                        >
+                            Tambah
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-end">
+                        <form action="{{ url()->current() }}" method="get">
+                            <input type="text"
+                                   class="form-control"
+                                   name="s"
+                                   placeholder="Cari"
+                                   style="width: 255px"
+                                   value="{{ $search }}"
+                            >
+                        </form>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table m-0 align-middle table-hover">
+                            <thead>
+                            <tr>
+                                <th class="bg-body-tertiary text-center" scope="col" width="5%">No</th>
+                                <th class="bg-body-tertiary" scope="col">Nama</th>
+                                <th class="bg-body-tertiary" scope="col" width="15%"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @if(!empty($educationLevels) && $educationLevels->count() > 0)
+                                @foreach($educationLevels as $index => $educationLevel)
+                                    <tr class="align-middle">
+                                        <th class="text-nowrap text-center">{{ $index + $educationLevels->firstItem() }}</th>
+                                        <td class="text-nowrap">
+                                            {{ $educationLevel->name }}
+                                        </td>
+                                        <td class="text-nowrap text-end">
+                                            <div class="d-flex justify-content-end gap-2">
+                                                <div class="dropdown d-flex">
+                                                    <a class="text-decoration-none fw-bold text-primary d-flex align-items-center gap-1"
+                                                       href="#"
+                                                       role="button"
+                                                       data-coreui-toggle="dropdown" aria-expanded="false"
+                                                    >
+                                                        <x-heroicon-c-ellipsis-vertical
+                                                            style="height: 20px;width: 20px"/>
+                                                    </a>
+
+                                                    <ul class="dropdown-menu mt-2"
+                                                        style="font-size: 14px; min-width: 200px">
+                                                        <li>
+                                                            <a class="text-decoration-none fw-bold d-flex align-items-center gap-2 dropdown-item text-secondary"
+                                                               href="{{ route('education-level.edit', $educationLevel->id) }}"
+                                                            >
+                                                                <x-heroicon-m-pencil-square
+                                                                    style="height: 20px;width: 20px"/>
+                                                                Ubah
+                                                            </a>
+                                                        </li>
+
+                                                        <li>
+                                                            <button
+                                                                class="text-decoration-none fw-bold text-danger d-flex align-items-center gap-2 dropdown-item"
+                                                                onclick="handleDelete({{ $educationLevel->id }})"
+                                                            >
+                                                                <x-heroicon-m-trash style="height: 20px;width: 20px"/>
+                                                                Hapus
+                                                            </button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr class="align-middle">
+                                    <td class="text-center py-3" colspan="3">
+                                        {{ __('No Data Available in Table') }}
+                                    </td>
+                                </tr>
+                            @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    {{ $educationLevels->links() }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="createModal" data-coreui-backdrop="static" data-coreui-keyboard="false" tabindex="-1"
+         aria-labelledby="createModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form action="{{ route('education-level.store') }}" method="post">
+                    @csrf
+
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title" id="createModalLabel">{{ __('Add Education Level') }}</h5>
+                        <button type="reset" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body py-0">
+                        <div class="mb-3">
+                            <label for="name" class="form-label required">
+                                Nama
+                            </label>
+                            <input
+                                type="text"
+                                class="form-control {{ $errors->first('name') != null ? 'is-invalid' : '' }}"
+                                id="password"
+                                name="name"
+                                value="{{ old('name') }}"
+                                maxlength="255"
+                            >
+                            <div class="invalid-feedback">
+                                {{ $errors->first('name') }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0 pt-2">
+                        <button type="reset" class="btn btn-secondary my-0"
+                                data-coreui-dismiss="modal">{{ __('Cancel') }}</button>
+                        <button type="submit" class="btn btn-primary my-0">{{ __('Save') }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @php $educationLevel = session('educationLevel') @endphp
+    @if($educationLevel != null)
+        <div class="modal fade" id="editModal" data-coreui-backdrop="static" data-coreui-keyboard="false" tabindex="-1"
+             aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form action="{{ route('education-level.update', $educationLevel) }}" method="post">
+                        @csrf
+                        @method('put')
+
+                        <div class="modal-header border-0">
+                            <h5 class="modal-title" id="editModalLabel">{{ __('Edit Education Level') }}</h5>
+                            <button type="reset" class="btn-close" data-coreui-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body py-0">
+                            <div class="mb-3">
+                                <label for="name" class="form-label required">
+                                    Nama
+                                </label>
+                                <input
+                                    type="text"
+                                    class="form-control {{ $errors->first('name') != null ? 'is-invalid' : '' }}"
+                                    id="password"
+                                    name="name"
+                                    value="{{ old('name') ?? $educationLevel->name }}"
+                                    maxlength="255"
+                                >
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('name') }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer border-0 pt-2">
+                            <button type="reset" class="btn btn-secondary my-0"
+                                    data-coreui-dismiss="modal">{{ __('Cancel') }}</button>
+                            <button type="submit" class="btn btn-primary my-0">{{ __('Save') }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endif
+@endsection
+
+@push('script')
+    {!! session('script') !!}
+
+    <script>
+        function handleDelete(id) {
+            new Swal({
+                title: "Hapus Jenjang Pendidikan?",
+                text: "Apakah Anda yakin ingin melakukan ini?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Konfirmasi",
+                cancelButtonText: "Batal",
+                buttonsStyling: false,
+                customClass: {
+                    confirmButton: "btn btn-danger text-white",
+                    cancelButton: "btn btn-secondary ms-2"
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let url = `{{ route('education-level.destroy', ['']) }}/${id}`;
+                    let form = document.createElement('form');
+                    form.setAttribute('method', 'post');
+                    form.setAttribute('action', url);
+
+                    let csrfField = document.createElement('input');
+                    csrfField.setAttribute('type', 'hidden');
+                    csrfField.setAttribute('name', '_token');
+                    csrfField.setAttribute('value', $('meta[name="csrf-token"]').attr('content'));
+                    form.appendChild(csrfField);
+
+                    let methodField = document.createElement('input');
+                    methodField.setAttribute('type', 'hidden');
+                    methodField.setAttribute('name', '_method');
+                    methodField.setAttribute('value', 'DELETE');
+                    form.appendChild(methodField);
+
+                    document.body.appendChild(form);
+                    form.submit();
+                } else {
+                    swal.close();
+                }
+            });
+        }
+    </script>
+@endpush
+
