@@ -92,7 +92,13 @@
 
                                         </div>
                                     </div>
-
+                                    
+                                    <div class="mb-3 d-flex justify-content-end">
+                                        <a href="<?php echo e(route('auth.forgot.password')); ?>" class="text-decoration-none small">
+                                            Lupa Password?
+                                        </a>
+                                    </div>
+                                    
                                     <div class="mb-3 form-check">
                                         <input type="checkbox"
                                                class="form-check-input"
