@@ -7,6 +7,8 @@ use App\Http\Controllers\Auth\ProfileCompletionController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\RegistrationCompletionController;
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\CourseScheduleController;
@@ -46,6 +48,10 @@ Route::get('/privacy-policy', PrivacyPolicyController::class)->name('privacy-pol
 Route::get('/term-of-service', TermOfServiceController::class)->name('term-of-service');
 Route::get('/contact-us', ContactUsController::class)->name('contact-us');
 Route::get('/course-schedule/{slug}', [CourseScheduleController::class, 'guestDetail'])->name('course-schedule.guest-detail');
+Route::get('/forgot-password', ForgotPasswordController::class)->name('auth.forgot.password');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'submit'])->name('auth.forgot.password.submit');
+Route::get('/reset-password/{token}', ResetPasswordController::class)->name('password.reset');
+Route::post('/reset-password', [ResetPasswordController::class, 'submit'])->name('password.update');
 
 Route::get('/email/verify', [VerificationController::class, 'notice'])
     ->middleware(['auth'])
