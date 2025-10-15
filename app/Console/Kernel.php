@@ -12,7 +12,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
+        // Schedule yang sudah ada sebelumnya
         $schedule->command('course:send-reminder-mail')->hourly();
+        
+        // Schedule baru untuk auto-update status course
+        $schedule->command('course:update-status')
+                 ->everyFiveMinutes()
+                 ->withoutOverlapping();
     }
 
     /**

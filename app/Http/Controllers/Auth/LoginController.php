@@ -24,6 +24,23 @@ class LoginController extends Controller
         ];
 
         if (auth()->attempt($credential, $validatedData['remember_me'] ?? false)) {
+            $request->session()->regenerate();
+
+            // Cek apakah ada redirect parameter dari query string
+            $redirectUrl = $request->input('redirect');
+            
+            if ($redirectUrl) {
+                // Validasi URL untuk keamanan (pastikan URL valid dan dari domain yang sama)
+                $parsedUrl = parse_url($redirectUrl);
+                $currentHost = $request->getHost();
+                
+                // Jika URL relative atau dari host yang sama, redirect ke sana
+                if (!isset($parsedUrl['host']) || $parsedUrl['host'] === $currentHost) {
+                    return redirect($redirectUrl);
+                }
+            }
+
+            // Default redirect
             return redirect()->route('my-home');
         }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\CourseEnrollmentMailJob;
 use App\Jobs\CourseStartMailJob;
+use App\Jobs\ZoomOpenedMailJob;
 use App\Models\Course;
 use App\Models\CourseParticipant;
 use Carbon\Carbon;
@@ -20,15 +21,15 @@ class CourseScheduleController extends Controller
         $query = Course::query();
 
         if (request()->has('done')) {
+            // Tampilkan semua course dengan status DONE
             $query->where('status', Course::STATUS_DONE);
         } else {
-            // HANYA TAMPILKAN ACARA YANG BELUM LEWAT TANGGALNYA
+            // HANYA TAMPILKAN ACARA YANG MASIH AVAILABLE DAN BELUM LEWAT
             $query->where('status', Course::STATUS_AVAILABLE)
-                  ->where('date', '>=', Carbon::today()->toDateString());
+                  ->where('date', '>=', Carbon::now());
         }
 
         if ($search) {
-            // Logika pencarian disamakan dengan live search
             $query->where(function ($q) use ($search) {
                 $q->where('title', 'like', '%'.$search.'%')
                   ->orWhereHas('lecturer', function ($subq) use ($search) {
@@ -61,15 +62,15 @@ class CourseScheduleController extends Controller
         $query = Course::query();
 
         if (request()->has('done')) {
+            // Tampilkan semua course dengan status DONE
             $query->where('status', Course::STATUS_DONE);
         } else {
-            // HANYA TAMPILKAN ACARA YANG BELUM LEWAT TANGGALNYA
+            // HANYA TAMPILKAN ACARA YANG MASIH AVAILABLE DAN BELUM LEWAT
             $query->where('status', Course::STATUS_AVAILABLE)
-                  ->where('date', '>=', Carbon::today()->toDateString());
+                  ->where('date', '>=', Carbon::now());
         }
 
         if ($search) {
-             // Logika pencarian disamakan dengan live search
             $query->where(function ($q) use ($search) {
                 $q->where('title', 'like', '%'.$search.'%')
                   ->orWhereHas('lecturer', function ($subq) use ($search) {
@@ -146,42 +147,46 @@ class CourseScheduleController extends Controller
 
     public function search(Request $request)
     {
-        $searchQuery = $request->input('query');
-        $statusFilter = $request->input('status');
+        try {
+            $searchQuery = $request->input('query');
+            $statusFilter = $request->input('status');
 
-        $courses = Course::query();
+            $courses = Course::query();
 
-        if ($statusFilter === 'done') {
-            $courses->where('status', Course::STATUS_DONE);
-        } else {
-            // Default ke 'available' dan tambahkan filter tanggal
-            $courses->where('status', Course::STATUS_AVAILABLE)
-                    ->where('date', '>=', Carbon::today()->toDateString());
+            if ($statusFilter === 'done') {
+                // Tampilkan semua course dengan status DONE
+                $courses->where('status', Course::STATUS_DONE);
+            } else {
+                // Default ke 'available' dan filter yang belum lewat waktu
+                $courses->where('status', Course::STATUS_AVAILABLE)
+                        ->where('date', '>=', Carbon::now());
+            }
+
+            if ($searchQuery) {
+                $courses->where(function ($query) use ($searchQuery) {
+                    $query->where('title', 'LIKE', "%{$searchQuery}%")
+                          ->orWhereHas('lecturer', function ($q) use ($searchQuery) {
+                              $q->where('name', 'LIKE', "%{$searchQuery}%");
+                          });
+                });
+            }
+        
+            $results = $courses->latest()->get();
+
+            return view('course-schedule.guest._course_list', ['courses' => $results]);
+        } catch (Exception $exception) {
+            Log::error('Search error: ' . $exception->getMessage());
+            return view('course-schedule.guest._course_list', ['courses' => collect()]);
         }
-
-        if ($searchQuery) {
-            $courses->where(function ($query) use ($searchQuery) {
-                $query->where('title', 'LIKE', "%{$searchQuery}%")
-                      ->orWhereHas('lecturer', function ($q) use ($searchQuery) {
-                          $q->where('name', 'LIKE', "%{$searchQuery}%");
-                      });
-            });
-        }
-    
-        $results = $courses->latest()->get();
-
-        return view('course-schedule.guest._course_list', ['courses' => $results]);
     }
     
     public function openZoom($courseId)
     {
         $course = Course::findOrFail($courseId);
-        $participants = $course->participants; // relasi ke peserta kursus
+        $participants = $course->participants;
 
-        // Tandai bahwa Zoom sudah dibuka
         $course->update(['zoom_opened_at' => now()]);
 
-        // Kirim email ke semua peserta
         foreach ($participants as $participant) {
             ZoomOpenedMailJob::dispatch($participant->user, $course);
         }
