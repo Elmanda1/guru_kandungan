@@ -91,11 +91,16 @@ class Course extends Model
 
     public function isRegistered()
     {
+        if (!auth()->check()) {
+            return false; // belum login, maka dianggap belum terdaftar
+        }
+    
         return CourseParticipant::query()
-            ->where('participant_id', auth()->user()->id)
+            ->where('participant_id', auth()->id()) // aman, auth()->id() auto-null kalau belum login
             ->where('course_id', $this->id)
             ->exists();
     }
+
 
     public function isAvailable()
     {
@@ -120,10 +125,13 @@ class Course extends Model
     public function isStarting()
     {
         $currentDate = Carbon::now();
-
+    
         $courseDate = Carbon::parse($this->date);
         $courseStartTime = Carbon::parse($this->date.' '.$this->start_time);
-
-        return $courseDate->isToday() && $courseStartTime->isBefore($currentDate);
+        
+        // Kurangi 15 menit dari waktu mulai course
+        $showButtonTime = $courseStartTime->copy()->subMinutes(15);
+    
+        return $courseDate->isToday() && $currentDate->greaterThanOrEqualTo($showButtonTime);
     }
 }
