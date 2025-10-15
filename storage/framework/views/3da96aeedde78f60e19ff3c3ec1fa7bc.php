@@ -13,44 +13,50 @@
     class="d-flex align-items-center py-6" 
     style="font-family: 'Poppins', sans-serif;">
 
-    <div class="container px-lg-5">
-        <div class="row align-items-center">
+<div class="container px-lg-5 mb-4">
+    <div class="row align-items-center">
 
-            <!-- Text Section -->
-            <div class="col-12 col-lg-7" style="animation: fadeInLeft 1.2s ease;">
-                <div class="mb-4 heading">
-                    <div class="d-flex flex-column mb-3">
-                        <span class="text-primary fw-semibold" 
-                              style="letter-spacing: 1px; font-size: 20px; text-transform: uppercase;">
-                            Guru Kandungan
-                        </span>
-                        <small class="text-secondary small ms-0 ms-lg-1" 
-                               style="font-size: 15px; opacity: 0.9;">
-                            Oleh Departemen Obstetri dan Ginekologi, Fakultas Kedokteran Universitas Airlangga
-                        </small>
-                    </div>
-                    <h1 class="fw-bold"
-                        style="font-size: 52px; line-height: 1.2; color: #1e1e1e; letter-spacing: -1px;">
-                        Education Without <span style="color:#007bff;">Walls</span>
-                    </h1>
+        <!-- Text Section -->
+        <div class="col-12 col-lg-7" style="animation: fadeInLeft 1.2s ease;">
+            <div class="heading">
+                <div class="d-flex flex-column mb-2" style="border-left: 5px solid #004aad; padding-left: 18px;">
+                    <span class="fw-bold" 
+                          style="letter-spacing: 2px; font-size: 36px; text-transform: uppercase; 
+                                 font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+                                 color: #0056b3;">
+                        Guru Kandungan
+                    </span>
+                    <small class="ms-0 ms-lg-1" 
+                           style="font-size: 14px; font-weight: 500; margin-top: 4px;
+                                  color: #64748b; line-height: 1.5;
+                                  font-family: 'Inter', system-ui, sans-serif;">
+                        Oleh Departemen Obstetri dan Ginekologi, Fakultas Kedokteran Universitas Airlangga
+                    </small>
                 </div>
-                <p class="lead mb-4" 
-                   style="font-size: 18px; color: #555; line-height: 1.8; max-width: 90%;">
-                    Platform pembelajaran interaktif yang menghadirkan edukasi seputar 
-                    kesehatan reproduksi wanita — dirancang untuk memperluas wawasan, 
-                    meningkatkan kesadaran, dan membangun generasi yang lebih sehat.
-                </p>
+                <h1 class="fw-semibold pt-4"
+                    style="font-size: 24px; line-height: 1.4; color: #2c3e50; 
+                           letter-spacing: 0.5px;
+                           font-family: 'Poppins', 'Segoe UI', sans-serif;
+                           margin: 0;">
+                    Education Without <span style="color: #0056b3; font-weight: 600;">Walls</span>
+                </h1>
             </div>
+            <p class="mb-4" 
+               style="font-size: 17px; color: #475569; line-height: 1.9; max-width: 92%;
+                      font-family: 'Inter', system-ui, sans-serif; font-weight: 400;">
+                Platform pembelajaran interaktif yang menghadirkan edukasi seputar 
+                kesehatan reproduksi wanita — dirancang untuk memperluas wawasan, 
+                meningkatkan kesadaran, dan membangun generasi yang lebih sehat.
+            </p>
+        </div>
 
-            <!-- Image Section -->
-            <div class="col-12 col-lg-5">
-                <img src="https://gurukandungan.id/assets/images/banner.png"
-                     class="img-fluid" width="600" style="animation: fadeInImage 1.8s ease forwards;">
-
-            </div>
+        <!-- Image Section -->
+        <div class="col-12 col-lg-5">
+            <img src="https://gurukandungan.id/assets/images/banner.png"
+                 class="img-fluid" width="600" style="animation: fadeInImage 1.8s ease forwards;">
         </div>
     </div>
-
+</div>
     <!-- Animations -->
     <style>
         @keyframes fadeInLeft {

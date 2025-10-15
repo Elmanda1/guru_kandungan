@@ -22,6 +22,14 @@
                                         >
                                         Belajar Sekarang
                                     </a>
+                                        {{-- 🔽 Tombol sementara untuk kirim email --}}
+    <button 
+        class="btn btn-outline-primary mt-2 w-100"
+        onclick="sendMail({{ $course->id }})"
+    >
+        Kirim Email Tes
+    </button>
+
                                 @endif
 
                                 <button class="btn btn-danger text-white mt-2 w-100"
@@ -200,5 +208,27 @@
                 }
             });
         }
+
+        function sendMail(courseId) {
+    new Swal({
+        title: "Kirim Email?",
+        text: "Ini hanya untuk pengujian, lanjutkan?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Kirim",
+        cancelButtonText: "Batal",
+        buttonsStyling: false,
+        customClass: {
+            confirmButton: "btn btn-primary text-white",
+            cancelButton: "btn btn-secondary ms-2"
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let url = `{{ route('course-schedule.send-mail', ['courseId' => ':id']) }}`.replace(':id', courseId);
+            window.location.href = url;
+        }
+    });
+}
+
     </script>
 @endpush

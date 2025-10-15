@@ -28,6 +28,19 @@ use App\Http\Controllers\Resource\TopicController;
 use App\Http\Controllers\TermOfServiceController;
 use App\Http\Controllers\UserGuideController;
 use Illuminate\Support\Facades\Route;
+use App\Jobs\CourseStartMailJob;
+use App\Models\Course;
+use App\Models\User;
+
+Route::get('/course-schedule/{courseId}/send-mail', function ($courseId) {
+    $course = Course::findOrFail($courseId);
+    $user = auth()->user(); // atau ambil dari peserta
+
+    CourseStartMailJob::dispatch($user, $course);
+
+    return back()->with('success', 'Job pengiriman email berhasil dikirim ke queue!');
+})->name('course-schedule.send-mail');
+
 
 /*
 |--------------------------------------------------------------------------
