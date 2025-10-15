@@ -34,7 +34,7 @@ use App\Models\User;
 
 Route::get('/course-schedule/{courseId}/send-mail', function ($courseId) {
     $course = Course::findOrFail($courseId);
-    $user = auth()->user(); // atau ambil dari peserta
+    $user = auth()->user();
 
     CourseStartMailJob::dispatch($user, $course);
 
@@ -46,25 +46,23 @@ Route::get('/course-schedule/{courseId}/send-mail', function ($courseId) {
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
 */
 
 // Halaman utama diarahkan ke jadwal pembelajaran
 Route::get('/', [CourseScheduleController::class, 'guestList'])->name('course-schedule.public');
 Route::get('/beranda', HomeController::class)->name('home');
-Route::get('/course-schedule', [CourseScheduleController::class, 'guestList'])->name('course-schedule.guest-list');
 Route::get('/privacy-policy', PrivacyPolicyController::class)->name('privacy-policy');
 Route::get('/term-of-service', TermOfServiceController::class)->name('term-of-service');
 Route::get('/contact-us', ContactUsController::class)->name('contact-us');
-Route::get('/course-schedule/{slug}', [CourseScheduleController::class, 'guestDetail'])->name('course-schedule.guest-detail');
 Route::get('/forgot-password', ForgotPasswordController::class)->name('auth.forgot.password');
 Route::post('/forgot-password', [ForgotPasswordController::class, 'submit'])->name('auth.forgot.password.submit');
 Route::get('/reset-password/{token}', ResetPasswordController::class)->name('password.reset');
 Route::post('/reset-password', [ResetPasswordController::class, 'submit'])->name('password.update');
+
+// Course Schedule Routes (Guest) - URUTAN PENTING!
+Route::get('/course-schedule', [CourseScheduleController::class, 'guestList'])->name('course-schedule.guest-list');
+Route::get('/course-schedule/search', [CourseScheduleController::class, 'search'])->name('course-schedule.search');
+Route::get('/course-schedule/{slug}', [CourseScheduleController::class, 'guestDetail'])->name('course-schedule.guest-detail');
 
 Route::get('/email/verify', [VerificationController::class, 'notice'])
     ->middleware(['auth'])
@@ -106,8 +104,7 @@ Route::prefix('auth')->name('auth.')->group(function () {
 });
 
 Route::middleware(['auth', 'verified', 'registration.check', 'profile.check'])->group(function () {
-    Route::get('/course-schedule', [CourseScheduleController::class, 'guestList'])->name('course-schedule.guest-list');
-    Route::get('/course-schedule/search', [CourseScheduleController::class, 'search'])->name('course-schedule.search');
+    // Course Schedule Actions (Authenticated)
     Route::post('/course-schedule/{course}/register', [CourseScheduleController::class, 'register'])->name('course-schedule.register');
     Route::delete('/course-schedule/{course}/cancel', [CourseScheduleController::class, 'cancel'])->name('course-schedule.cancel');
 
