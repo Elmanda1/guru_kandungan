@@ -52,9 +52,9 @@ class StoreRequest extends FormRequest
                 },
             ],
             'quota' => ['required', 'integer', 'min:1'],
-            'zoom_link' => ['required', 'url'],
-            'zoom_id' => ['required', 'string', 'max:255'],
-            'zoom_password' => ['required', 'string', 'max:255'],
+            'zoom_link' => ['nullable', 'url'],
+            'zoom_id' => ['nullable', 'string', 'max:255'],
+            'zoom_password' => ['nullable', 'string', 'max:255'],
         ];
     }
 

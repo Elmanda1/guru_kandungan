@@ -253,7 +253,7 @@
                         <div class="row">
                             <div class="col-12 col-lg-6">
                                 <div class="mb-3">
-                                    <label for="zoom_link" class="form-label required">
+                                    <label for="zoom_link" class="">
                                         {{ __('Link Zoom') }}
                                     </label>
                                     <input
@@ -261,8 +261,7 @@
                                         class="form-control {{ $errors->first('zoom_link') != null ? 'is-invalid' : '' }}"
                                         id="zoom_link"
                                         name="zoom_link"
-                                        value="{{ old('zoom_link', 'https://us02web.zoom.us/j/87298473242?pwd=yq9NtQi1WeTl1Qop6hm4RPwGQD9WM8.1') }}"
-                                        required
+                                        value="{{ old('zoom_link', '') }}"
                                     >
                                     <div class="invalid-feedback">
                                         {{ $errors->first('zoom_link') }}
@@ -272,7 +271,7 @@
 
                             <div class="col-12 col-lg-6">
                                 <div class="mb-3">
-                                    <label for="zoom_id" class="form-label required">
+                                    <label for="zoom_id" class="">
                                         {{ __('ID Zoom') }}
                                     </label>
                                     <input
@@ -280,8 +279,7 @@
                                         class="form-control {{ $errors->first('zoom_id') != null ? 'is-invalid' : '' }}"
                                         id="zoom_id"
                                         name="zoom_id"
-                                        value="{{ old('zoom_id', '872 9847 3242') }}"
-                                        required
+                                        value="{{ old('zoom_id', '') }}"
                                     >
                                     <div class="invalid-feedback">
                                         {{ $errors->first('zoom_id') }}
@@ -291,7 +289,7 @@
 
                             <div class="col-12 col-lg-6">
                                 <div class="mb-3">
-                                    <label for="zoom_password" class="form-label required">
+                                    <label for="zoom_password" class="">
                                         {{ __('Password Zoom') }}
                                     </label>
                                     <input
@@ -299,8 +297,7 @@
                                         class="form-control {{ $errors->first('zoom_password') != null ? 'is-invalid' : '' }}"
                                         id="zoom_password"
                                         name="zoom_password"
-                                        value="{{ old('zoom_password', 123456) }}"
-                                        required
+                                        value="{{ old('zoom_password', '') }}"
                                     >
                                     <div class="invalid-feedback">
                                         {{ $errors->first('zoom_password') }}
