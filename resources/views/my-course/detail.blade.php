@@ -16,13 +16,12 @@
                         @if($course->isRegistered())
                             @if(!$course->isDone())
                                 @if($course->isStarting())
-                                    <button
+                                    <a
                                         class="btn btn-primary w-100"
-                                        data-coreui-toggle="modal"
-                                        data-coreui-target="#zoom-modal"
-                                    >
+                                        href="{{ $course->zoom_link }}" target="_blank"
+                                        >
                                         Belajar Sekarang
-                                    </button>
+                                    </a>
                                 @endif
 
                                 <button class="btn btn-danger text-white mt-2 w-100"
