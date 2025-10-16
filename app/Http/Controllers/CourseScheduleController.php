@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\CourseEnrollmentMailJob;
 use App\Jobs\CourseStartMailJob;
+use App\Jobs\ZoomOpenedMailJob;
 use App\Models\Course;
 use App\Models\CourseParticipant;
 use Carbon\Carbon;
@@ -23,9 +24,9 @@ class CourseScheduleController extends Controller
             // Tampilkan semua course dengan status DONE
             $query->where('status', Course::STATUS_DONE);
         } else {
-            // HANYA TAMPILKAN ACARA YANG MASIH AVAILABLE DAN BELUM LEWAT
+            // TAMPILKAN ACARA YANG MASIH AVAILABLE DAN TERMASUK HARI INI (belum lewat hari ini)
             $query->where('status', Course::STATUS_AVAILABLE)
-                  ->where('date', '>=', Carbon::now());
+                  ->whereDate('date', '>=', Carbon::today());
         }
 
         if ($search) {
@@ -190,9 +191,9 @@ class CourseScheduleController extends Controller
         }
     
         $course->update(['zoom_opened_at' => now()]);
-    
-        foreach ($course->courseParticipants as $courseParticipant) {
-            CourseStartMailJob::dispatch($courseParticipant->participant, $course);
+
+        foreach ($participants as $participant) {
+            ZoomOpenedMailJob::dispatch($participant->user, $course);
         }
         
         session()->flash('success', __('Emails successfully dispatched'));
