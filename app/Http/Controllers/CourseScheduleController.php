@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Jobs\CourseEnrollmentMailJob;
 use App\Jobs\CourseStartMailJob;
-use App\Jobs\ZoomOpenedMailJob;
 use App\Models\Course;
 use App\Models\CourseParticipant;
 use Carbon\Carbon;
@@ -183,14 +182,18 @@ class CourseScheduleController extends Controller
     public function openZoom($courseId)
     {
         $course = Course::findOrFail($courseId);
-        $participants = $course->participants;
-
-        $course->update(['zoom_opened_at' => now()]);
-
-        foreach ($participants as $participant) {
-            ZoomOpenedMailJob::dispatch($participant->user, $course);
+    
+        // Cek apakah sudah pernah dibuka
+        if ($course->zoom_opened_at) {
+            return redirect()->back();
         }
-
-        return back()->with('success', 'Notifikasi Zoom telah dikirim ke semua peserta!');
+    
+        $course->update(['zoom_opened_at' => now()]);
+    
+        foreach ($course->courseParticipants as $courseParticipant) {
+            CourseStartMailJob::dispatch($courseParticipant->participant, $course);
+        }
+        
+        return redirect()->back();
     }
 }

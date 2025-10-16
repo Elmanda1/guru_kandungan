@@ -32,14 +32,8 @@ use App\Jobs\CourseStartMailJob;
 use App\Models\Course;
 use App\Models\User;
 
-Route::get('/course-schedule/{courseId}/send-mail', function ($courseId) {
-    $course = Course::findOrFail($courseId);
-    $user = auth()->user();
-
-    CourseStartMailJob::dispatch($user, $course);
-
-    return back()->with('success', 'Job pengiriman email berhasil dikirim ke queue!');
-})->name('course-schedule.send-mail');
+Route::post('/course-schedule/{courseId}/open-zoom', [CourseScheduleController::class, 'openZoom'])
+    ->name('course-schedule.open-zoom');
 
 
 /*
