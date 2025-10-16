@@ -23,6 +23,11 @@
                                 <form action="{{ route('auth.login.submit') }}" method="post">
                                     @csrf
 
+                                    {{-- Hidden input untuk preserve redirect URL --}}
+                                    @if(request()->has('redirect'))
+                                        <input type="hidden" name="redirect" value="{{ request()->input('redirect') }}">
+                                    @endif
+
                                     <div class="mb-3">
                                         <label for="email" class="form-label">
                                             Email
