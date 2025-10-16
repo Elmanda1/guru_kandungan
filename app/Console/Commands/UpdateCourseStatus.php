@@ -9,14 +9,13 @@ use Illuminate\Console\Command;
 class UpdateCourseStatus extends Command
 {
     protected $signature = 'course:update-status';
-    protected $description = 'Update course status to done when date and time have passed';
+    protected $description = 'Update course status to done when date has passed (H+1)';
 
     public function handle()
     {
-        // Cek apakah kolom 'date' berisi datetime atau hanya date
-        // Jika date adalah datetime, gunakan ini:
+        // Ambil course yang sudah melewati hari ini (H+1)
         $courses = Course::where('status', Course::STATUS_AVAILABLE)
-            ->where('date', '<', Carbon::now())
+            ->whereDate('date', '<', Carbon::today())
             ->get();
 
         $count = $courses->count();
