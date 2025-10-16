@@ -30,6 +30,11 @@ class Course extends Model
         'embeddedYoutubeLink',
     ];
 
+    protected $casts = [
+        'zoom_opened_at' => 'datetime',
+    ];
+
+
     public function topic(): BelongsTo
     {
         return $this->belongsTo(Topic::class);
@@ -134,4 +139,10 @@ class Course extends Model
     
         return $courseDate->isToday() && $currentDate->greaterThanOrEqualTo($showButtonTime);
     }
+
+    public function hasEmailBeenSent()
+    {
+        return !is_null($this->zoom_opened_at);
+    }
+
 }

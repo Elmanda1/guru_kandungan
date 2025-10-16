@@ -178,13 +178,14 @@ class CourseScheduleController extends Controller
             return view('course-schedule.guest._course_list', ['courses' => collect()]);
         }
     }
-    
+        
     public function openZoom($courseId)
     {
         $course = Course::findOrFail($courseId);
     
         // Cek apakah sudah pernah dibuka
         if ($course->zoom_opened_at) {
+            session()->flash('info', __('Emails have already been sent for this course'));
             return redirect()->back();
         }
     
@@ -194,6 +195,7 @@ class CourseScheduleController extends Controller
             CourseStartMailJob::dispatch($courseParticipant->participant, $course);
         }
         
+        session()->flash('success', __('Emails successfully dispatched'));
         return redirect()->back();
     }
 }
