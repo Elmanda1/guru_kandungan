@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Mail\ZoomOpenedMail;
+use App\Mail\CourseStartMail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -31,6 +31,6 @@ class CourseStartMailJob implements ShouldQueue
      */
     public function handle(): void
     {
-        Mail::to($this->user->email)->send(new CourseStart($this->user, $this->course));
+        Mail::to($this->user->email)->send(new CourseStartMail($this->user, $this->course));
     }
 }

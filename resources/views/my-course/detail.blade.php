@@ -23,12 +23,12 @@
                                         Belajar Sekarang
                                     </a>
                                         {{-- 🔽 Tombol sementara untuk kirim email --}}
-    <button 
-        class="btn btn-outline-primary mt-2 w-100"
-        onclick="sendMail({{ $course->id }})"
-    >
-        Kirim Email Tes
-    </button>
+                                 <button 
+                                     class="btn btn-outline-primary mt-2 w-100"
+                                     onclick="sendMail({{ $course->id }})"
+                                 >
+                                     Kirim Email Tes
+                                 </button>
 
                                 @endif
 
@@ -209,13 +209,13 @@
             });
         }
 
-        function sendMail(courseId) {
+function sendMail(courseId) {
     new Swal({
-        title: "Kirim Email?",
-        text: "Ini hanya untuk pengujian, lanjutkan?",
+        title: "Kirim Email Zoom?",
+        text: "Email notifikasi akan dikirim ke semua peserta course ini.",
         icon: "question",
         showCancelButton: true,
-        confirmButtonText: "Kirim",
+        confirmButtonText: "Kirim Email",
         cancelButtonText: "Batal",
         buttonsStyling: false,
         customClass: {
@@ -224,11 +224,23 @@
         }
     }).then((result) => {
         if (result.isConfirmed) {
-            let url = `{{ route('course-schedule.send-mail', ['courseId' => ':id']) }}`.replace(':id', courseId);
-            window.location.href = url;
+            // Buat form untuk POST request
+            let form = document.createElement('form');
+            form.method = 'POST';
+            form.action = `{{ route('course-schedule.open-zoom', ['courseId' => ':id']) }}`.replace(':id', courseId);
+            
+            // Tambahkan CSRF token
+            let csrfInput = document.createElement('input');
+            csrfInput.type = 'hidden';
+            csrfInput.name = '_token';
+            csrfInput.value = '{{ csrf_token() }}';
+            form.appendChild(csrfInput);
+            
+            // Submit form
+            document.body.appendChild(form);
+            form.submit();
         }
     });
 }
-
     </script>
 @endpush

@@ -21,7 +21,8 @@
         <!-- Text Section -->
         <div class="col-12 col-lg-7" style="animation: fadeInLeft 1.2s ease;">
             <div class="heading">
-                <div class="d-flex flex-column mb-2" style="border-left: 5px solid #004aad; padding-left: 18px;">
+                <div class="d-flex flex-column mb-2 heading-border" 
+                     style="border-left: 5px solid #004aad; padding-left: 18px;">
                     <span class="fw-bold" 
                           style="letter-spacing: 2px; font-size: 36px; text-transform: uppercase; 
                                  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
@@ -43,11 +44,12 @@
                     Education Without <span style="color: #0056b3; font-weight: 600;">Walls</span>
                 </h1>
             </div>
-            <p class="mb-4" 
-               style="font-size: 17px; color: #475569; line-height: 1.9; max-width: 92%;
+            <p class="mb-4 responsive-text"
+               style="font-size: 17px; color: #475569; line-height: 1.9;
+                      max-width: 720px; margin: 0 auto;
                       font-family: 'Inter', system-ui, sans-serif; font-weight: 400;">
                 Platform pembelajaran interaktif yang menghadirkan edukasi seputar 
-                kesehatan reproduksi wanita — dirancang untuk memperluas wawasan, 
+                kesehatan reproduksi wanita, dirancang untuk memperluas wawasan, 
                 meningkatkan kesadaran, dan membangun generasi yang lebih sehat.
             </p>
         </div>
@@ -61,6 +63,19 @@
 </div>
     <!-- Animations -->
     <style>
+        @media (max-width: 768px) {
+                        .heading-border {
+                            border-left: none !important;
+                            padding-left: 0 !important;
+                        }
+        }
+        @media (max-width: 768px) {
+            .responsive-text {
+              text-align: center !important;
+              margin-left: auto !important;
+              margin-right: auto !important;
+            }
+        }
         @keyframes fadeInLeft {
             from { opacity: 0; transform: translateX(-60px); }
             to { opacity: 1; transform: translateX(0); }
