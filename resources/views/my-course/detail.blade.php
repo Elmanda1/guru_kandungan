@@ -22,13 +22,13 @@
                                         >
                                         Belajar Sekarang
                                     </a>
-                                        {{-- 🔽 Tombol sementara untuk kirim email --}}
+                                        <!-- {{-- 🔽 Tombol sementara untuk kirim email --}}
                                  <button 
                                      class="btn btn-outline-primary mt-2 w-100"
                                      onclick="sendMail({{ $course->id }})"
                                  >
                                      Kirim Email Tes
-                                 </button>
+                                 </button> -->
 
                                 @endif
 
@@ -209,38 +209,38 @@
             });
         }
 
-function sendMail(courseId) {
-    new Swal({
-        title: "Kirim Email Zoom?",
-        text: "Email notifikasi akan dikirim ke semua peserta course ini.",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonText: "Kirim Email",
-        cancelButtonText: "Batal",
-        buttonsStyling: false,
-        customClass: {
-            confirmButton: "btn btn-primary text-white",
-            cancelButton: "btn btn-secondary ms-2"
-        }
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Buat form untuk POST request
-            let form = document.createElement('form');
-            form.method = 'POST';
-            form.action = `{{ route('course-schedule.open-zoom', ['courseId' => ':id']) }}`.replace(':id', courseId);
+// function sendMail(courseId) {
+//     new Swal({
+//         title: "Kirim Email Zoom?",
+//         text: "Email notifikasi akan dikirim ke semua peserta course ini.",
+//         icon: "question",
+//         showCancelButton: true,
+//         confirmButtonText: "Kirim Email",
+//         cancelButtonText: "Batal",
+//         buttonsStyling: false,
+//         customClass: {
+//             confirmButton: "btn btn-primary text-white",
+//             cancelButton: "btn btn-secondary ms-2"
+//         }
+//     }).then((result) => {
+//         if (result.isConfirmed) {
+//             // Buat form untuk POST request
+//             let form = document.createElement('form');
+//             form.method = 'POST';
+//             form.action = `{{ route('course-schedule.open-zoom', ['courseId' => ':id']) }}`.replace(':id', courseId);
             
-            // Tambahkan CSRF token
-            let csrfInput = document.createElement('input');
-            csrfInput.type = 'hidden';
-            csrfInput.name = '_token';
-            csrfInput.value = '{{ csrf_token() }}';
-            form.appendChild(csrfInput);
+//             // Tambahkan CSRF token
+//             let csrfInput = document.createElement('input');
+//             csrfInput.type = 'hidden';
+//             csrfInput.name = '_token';
+//             csrfInput.value = '{{ csrf_token() }}';
+//             form.appendChild(csrfInput);
             
-            // Submit form
-            document.body.appendChild(form);
-            form.submit();
-        }
-    });
-}
+//             // Submit form
+//             document.body.appendChild(form);
+//             form.submit();
+//         }
+//     });
+// }
     </script>
 @endpush
