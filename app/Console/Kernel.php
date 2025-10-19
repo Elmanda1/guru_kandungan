@@ -19,6 +19,11 @@ class Kernel extends ConsoleKernel
         $schedule->command('course:update-status')
                  ->everyFiveMinutes()
                  ->withoutOverlapping();
+
+        $schedule->command('course:send-start-emails')
+                ->everyFiveMinutes()
+                ->withoutOverlapping(); // Prevent duplicate execution
+
     }
 
     /**
