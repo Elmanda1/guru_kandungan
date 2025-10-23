@@ -104,6 +104,7 @@ Route::middleware(['auth', 'verified', 'registration.check', 'profile.check'])->
 
     Route::prefix('app')->group(function () {
         Route::get('/home', MyHomeController::class)->name('my-home');
+        Route::get('/my-course/search', [MyCourseController::class, 'search'])->name('my-course.search');
         Route::get('/my-course', [MyCourseController::class, 'list'])->name('my-course.list');
         Route::get('/my-course/{slug}', [MyCourseController::class, 'detail'])->name('my-course.detail');
         Route::get('/user-guide', UserGuideController::class)->name('user-guide');

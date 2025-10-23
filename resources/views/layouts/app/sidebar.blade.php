@@ -100,8 +100,8 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link py-3 @if(request()->is('app/course-schedule/*')) active @endif"
-                   href="{{ route('course-schedule.app-list') }}"
+                <a class="nav-link py-3 @if(request()->is('/jadwal-pembelajaran')) active @endif"
+                   href="{{ route('course-schedule.public') }}"
                 >
                     <x-heroicon-o-calendar-date-range class="me-2" height="24" width="24"/>
                     {{ __('Course Schedule') }}

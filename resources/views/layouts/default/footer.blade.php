@@ -20,7 +20,7 @@
                     <div class="col-12 col-lg-2 mt-4 mt-lg-3 ps-lg-4">
                         <h6 class="fw-bold mb-3 text-uppercase text-warning">Team Development</h6>
                         <ul class="list-group small" type="none">
-                            <li class="mb-2">Brahmana Askandar</li>
+                            <li class="mb-2">Brahmana Askandar Tjokroprawiro</li>
                             <li class="mb-2">Ashon Sa'adi</li>
                             <li class="mb-2">M. Dimas Abdi Putra</li>
                             <li class="mb-2">Khoirunnisa Novitasari</li>

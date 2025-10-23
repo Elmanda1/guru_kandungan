@@ -192,9 +192,9 @@ class CourseScheduleController extends Controller
     
         $course->update(['zoom_opened_at' => now()]);
 
-        foreach ($participants as $participant) {
-            ZoomOpenedMailJob::dispatch($participant->user, $course);
-        }
+   //     foreach ($participants as $participant) {
+   //         ZoomOpenedMailJob::dispatch($participant->user, $course);
+   //     }
         
         session()->flash('success', __('Emails successfully dispatched'));
         return redirect()->back();

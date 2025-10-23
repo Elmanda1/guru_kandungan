@@ -104,7 +104,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link p-3 {{ request()->is('/') || request()->routeIs('course-schedule.public') ? 'active' : '' }}"
+                        <a class="nav-link p-3 {{ request()->is('/jadwal-pembelajaran') || request()->routeIs('course-schedule.public') ? 'active' : '' }}"
                            href="{{ route('course-schedule.public') }}">
                             {{ __('Jadwal Pembelajaran') }}
                         </a>
