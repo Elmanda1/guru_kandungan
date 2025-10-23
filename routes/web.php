@@ -43,8 +43,8 @@ Route::post('/course-schedule/{courseId}/open-zoom', [CourseScheduleController::
 */
 
 // Halaman utama diarahkan ke jadwal pembelajaran
-Route::get('/', [CourseScheduleController::class, 'guestList'])->name('course-schedule.public');
-Route::get('/beranda', HomeController::class)->name('home');
+Route::get('/jadwal-pembelajaran', [CourseScheduleController::class, 'guestList'])->name('course-schedule.public');
+Route::get('/', HomeController::class)->name('home');
 Route::get('/privacy-policy', PrivacyPolicyController::class)->name('privacy-policy');
 Route::get('/term-of-service', TermOfServiceController::class)->name('term-of-service');
 Route::get('/contact-us', ContactUsController::class)->name('contact-us');
