@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Resource;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Lecturer\CreateRequest;
 use App\Http\Requests\Lecturer\UpdateRequest;
+use App\Models\Department;
 use App\Models\EducationLevel;
 use App\Models\User;
 use Exception;
@@ -104,6 +105,7 @@ class LecturerController extends Controller
             'title' => __('Edit Lecturer'),
             'lecturer' => $user,
             'educationLevels' => EducationLevel::all(),
+            'departments' => Department::all(),
         ]);
     }
 
