@@ -171,7 +171,7 @@
                                         class="form-control {{ $errors->first('department') != null ? 'is-invalid' : '' }}"
                                         id="department"
                                         name="department"
-                                        value="{{ old('department') ?? $lecturer->department->name }}"
+                                        value="{{ old('department') ?? ($lecturer->department ? $lecturer->department->name : '') }}"
                                         maxlength="255"
                                         disabled
                                     >
