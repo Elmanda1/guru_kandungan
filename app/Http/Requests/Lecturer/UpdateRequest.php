@@ -23,7 +23,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'nik' => ['required', 'string', 'min:16', 'max:16', 'regex:/^[0-9]+$/', 'unique:users,nik,'.$this->user->id],
+            'nik' => ['required', 'string', 'min:16', 'max:25', 'regex:/^[0-9]+$/', 'unique:users,nik,'.$this->user->id],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$this->user->id],
             'phone' => ['required', 'string', 'max:13', 'regex:/^[0-9]+$/', 'unique:users,phone,'.$this->user->id],
             'address' => ['required', 'string', 'max:255'],

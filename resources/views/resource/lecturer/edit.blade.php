@@ -59,7 +59,7 @@
                                         name="nik"
                                         value="{{ old('nik') ?? $lecturer->nik }}"
                                         minlength="16"
-                                        maxlength="20"
+                                        maxlength="25"
                                         required
                                     >
                                     <div class="invalid-feedback">
