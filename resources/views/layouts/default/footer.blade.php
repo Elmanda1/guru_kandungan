@@ -9,7 +9,7 @@
                             <img src="{{ asset('assets/images/logo-with-yellow-text.png') }}" alt="" height="68">
                         </a>
                     </div>
-                    <div class="col-12 col-lg-5 mt-5 mt-lg-3 pe-lg-5">
+                    <div class="col-12 col-lg-4 mt-5 mt-lg-3 pe-lg-5">
                         <h6 class="fw-bold mb-3 text-uppercase text-warning">Tentang Kami</h6>
                         <p class="small">
                             Guru Kandungan adalah platform edukasi online yang menyediakan informasi lengkap tentang
@@ -17,7 +17,7 @@
                             Fakultas Kedokteran Universitas Airlangga.
                         </p>
                     </div>
-                    <div class="col-12 col-lg-2 mt-4 mt-lg-3 ps-lg-4">
+                    <div class="col-12 col-lg-3 mt-4 mt-lg-3 ps-lg-4">
                         <h6 class="fw-bold mb-3 text-uppercase text-warning">Team Development</h6>
                         <ul class="list-group small" type="none">
                             <li class="mb-2">Brahmana Askandar Tjokroprawiro</li>

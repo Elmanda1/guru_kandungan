@@ -149,20 +149,30 @@
 
                             <div class="col-12 col-lg-6">
                                 <div class="mb-3">
-                                    <label for="department" class="form-label">
+                                    <label for="department_id" class="form-label">
                                         {{ __('Department') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control {{ $errors->first('department') != null ? 'is-invalid' : '' }}"
-                                        id="department"
-                                        name="department"
-                                        value="{{ old('department') ?? $lecturer->department}}"
-                                        maxlength="255"
+                                    <select
+                                        class="form-select {{ $errors->first('department_id') != null ? 'is-invalid' : '' }}"
+                                        id="department_id"
+                                        name="department_id"
                                         required
                                     >
+                                        <option value="" selected>Pilih salah satu opsi</option>
+
+                                        @foreach($departments as $department)
+                                            <option
+                                                value="{{ $department->id }}"
+                                                @if(old('department_id') ?? $lecturer->department_id == $department->id)
+                                                    selected
+                                                @endif
+                                            >
+                                                {{ $department->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                     <div class="invalid-feedback">
-                                        {{ $errors->first('department') }}
+                                        {{ $errors->first('department_id') }}
                                     </div>
                                 </div>
                             </div>
