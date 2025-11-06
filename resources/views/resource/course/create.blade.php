@@ -261,7 +261,7 @@
                                         class="form-control {{ $errors->first('zoom_link') != null ? 'is-invalid' : '' }}"
                                         id="zoom_link"
                                         name="zoom_link"
-                                        value="{{ old('zoom_link', '') }}"
+                                        value="{{ old('zoom_link', 'https://us02web.zoom.us/j/87298473242?pwd=yq9NtQi1WeTl1Qop6hm4RPwGQD9WM8.1') }}"
                                     >
                                     <div class="invalid-feedback">
                                         {{ $errors->first('zoom_link') }}
@@ -279,7 +279,7 @@
                                         class="form-control {{ $errors->first('zoom_id') != null ? 'is-invalid' : '' }}"
                                         id="zoom_id"
                                         name="zoom_id"
-                                        value="{{ old('zoom_id', '') }}"
+                                        value="{{ old('zoom_id', '872 9847 3242') }}"
                                     >
                                     <div class="invalid-feedback">
                                         {{ $errors->first('zoom_id') }}
@@ -297,7 +297,7 @@
                                         class="form-control {{ $errors->first('zoom_password') != null ? 'is-invalid' : '' }}"
                                         id="zoom_password"
                                         name="zoom_password"
-                                        value="{{ old('zoom_password', '') }}"
+                                        value="{{ old('zoom_password', '123456') }}"
                                     >
                                     <div class="invalid-feedback">
                                         {{ $errors->first('zoom_password') }}
