@@ -259,4 +259,43 @@ class CourseController extends Controller
             return redirect()->back();
         }
     }
+
+    public function search(Request $request)
+    {
+        try {
+            $searchQuery = $request->input('query');
+            $statusFilter = $request->input('status');
+
+            $courses = Course::query();
+
+            // Apply lecturer filter if user is lecturer
+            if (auth()->user()->isLecturer()) {
+                $courses->where('lecturer_id', auth()->id());
+            }
+
+            // Filter by status (done/available)
+            if ($statusFilter === 'done') {
+                $courses->where('status', Course::STATUS_DONE);
+            } else {
+                $courses->where('status', Course::STATUS_AVAILABLE);
+            }
+
+            // Search in title or lecturer name
+            if ($searchQuery) {
+                $courses->where(function ($query) use ($searchQuery) {
+                    $query->where('title', 'LIKE', "%{$searchQuery}%")
+                          ->orWhereHas('lecturer', function ($q) use ($searchQuery) {
+                              $q->where('name', 'LIKE', "%{$searchQuery}%");
+                          });
+                });
+            }
+
+            $results = $courses->latest()->get();
+
+            return view('resource.course._course_list', ['courses' => $results]);
+        } catch (Exception $exception) {
+            Log::error('Course search error: ' . $exception->getMessage());
+            return view('resource.course._course_list', ['courses' => collect()]);
+        }
+    }
 }

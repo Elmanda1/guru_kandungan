@@ -112,6 +112,7 @@ Route::middleware(['auth', 'verified', 'registration.check', 'profile.check'])->
         Route::get('/course-schedule/{slug}', [CourseScheduleController::class, 'appDetail'])->name('course-schedule.app-detail');
 
         Route::resource('course', CourseController::class);
+        Route::get('course-search', [CourseController::class, 'search'])->name('course.search');
         Route::put('course/{course}/cancel', [CourseController::class, 'cancel'])->name('course.cancel');
         Route::put('course/{course}/continue', [CourseController::class, 'continue'])->name('course.continue');
         Route::put('course/{course}/complete', [CourseController::class, 'complete'])->name('course.complete');
