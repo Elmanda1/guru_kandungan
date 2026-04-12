@@ -24,7 +24,8 @@
                     <div class="text-center mb-3">
                         <a href="{{ url()->current() }}"
                            class="btn btn-outline-primary me-1 filter-btn {{ !request()->has('done') ? 'active' : '' }}"
-                           data-status="available">Belum Tayang</a>
+                           data-status="available">Belum
+                            Tayang</a>
                         <a href="{{ url()->current() }}?done"
                            class="btn btn-outline-primary filter-btn {{ request()->has('done') ? 'active' : '' }}"
                            data-status="done">Sudah Tayang</a>
@@ -41,7 +42,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="card-body px-0 border-0 bg-transparent">
                     <div class="row row-gap-48" id="course-results">
                         {{-- Load initial content --}}
@@ -81,7 +81,7 @@ $(document).ready(function() {
                 $('#course-results').html(data);
             },
             error: function() {
-                $('#course-results').html('<div class="col-12 text-center my-5"><p>Terjadi kesalahan saat memalu data.</p></div>');
+                $('#course-results').html('<div class="col-12 text-center my-5"><p>Terjadi kesalahan saat memuat data.</p></div>');
             }
         });
     }
