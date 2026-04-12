@@ -117,8 +117,42 @@
                     <div class="col-12 text-center">
                         <h4 class="mb-5 text-primary text-uppercase fw-bold">Jadwal Pembelajaran</h4>
                     </div>
-                    <div class="col-12">
+                </div>
+                <div class="row row-gap-4">
+                    <div class="col-12 col-lg-8">
                         <div class="border shadow-none" id="calendar"></div>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary mb-4">
+                                    <x-fas-circle-question width="20" height="20" class="me-2"/>
+                                    Panduan Pengguna
+                                </h5>
+                                <ul class="list-unstyled">
+                                    <li class="mb-3">
+                                        <a href="{{ route('user-guide') }}" class="text-decoration-none text-dark">
+                                            <small class="d-block mb-1">📖 Cara Menggunakan Platform</small>
+                                        </a>
+                                    </li>
+                                    <li class="mb-3">
+                                        <a href="{{ route('privacy-policy') }}" class="text-decoration-none text-dark">
+                                            <small class="d-block mb-1">🔒 Kebijakan Privasi</small>
+                                        </a>
+                                    </li>
+                                    <li class="mb-3">
+                                        <a href="{{ route('term-of-service') }}" class="text-decoration-none text-dark">
+                                            <small class="d-block mb-1">⚖️ Syarat & Ketentuan</small>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('contact-us') }}" class="text-decoration-none text-dark">
+                                            <small class="d-block mb-1">💬 Hubungi Kami</small>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
