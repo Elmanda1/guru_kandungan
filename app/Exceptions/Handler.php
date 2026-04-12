@@ -32,9 +32,19 @@ class Handler extends ExceptionHandler
 
     private function sendTelegramMessage($message)
     {
-        Telegram::bot()->sendMessage([
-            'chat_id' => env('TELEGRAM_CHAT_ID'),
-            'text' => $message,
-        ]);
+        try {
+            // Only send if telegram token and chat id are configured
+            if (!env('TELEGRAM_BOT_TOKEN') || !env('TELEGRAM_CHAT_ID')) {
+                return;
+            }
+
+            Telegram::bot()->sendMessage([
+                'chat_id' => env('TELEGRAM_CHAT_ID'),
+                'text' => $message,
+            ]);
+        } catch (\Throwable $e) {
+            // Silently fail if telegram sending fails to prevent error cascade
+            \Log::error('Failed to send Telegram message: ' . $e->getMessage());
+        }
     }
 }

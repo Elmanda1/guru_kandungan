@@ -15,6 +15,7 @@ use App\Models\User;
 use App\Services\CalendarEventService;
 use DragonCode\Support\Facades\Helpers\Str;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
