@@ -45,6 +45,7 @@ Route::post('/course-schedule/{courseId}/open-zoom', [CourseScheduleController::
 // Halaman utama diarahkan ke jadwal pembelajaran
 Route::get('/jadwal-pembelajaran', [CourseScheduleController::class, 'guestList'])->name('course-schedule.public');
 Route::get('/', HomeController::class)->name('home');
+Route::get('/user-guide', UserGuideController::class)->name('user-guide');
 Route::get('/privacy-policy', PrivacyPolicyController::class)->name('privacy-policy');
 Route::get('/term-of-service', TermOfServiceController::class)->name('term-of-service');
 Route::get('/contact-us', ContactUsController::class)->name('contact-us');
@@ -107,7 +108,6 @@ Route::middleware(['auth', 'verified', 'registration.check', 'profile.check'])->
         Route::get('/my-course/search', [MyCourseController::class, 'search'])->name('my-course.search');
         Route::get('/my-course', [MyCourseController::class, 'list'])->name('my-course.list');
         Route::get('/my-course/{slug}', [MyCourseController::class, 'detail'])->name('my-course.detail');
-        Route::get('/user-guide', UserGuideController::class)->name('user-guide');
         Route::get('/course-schedule', [CourseScheduleController::class, 'appList'])->name('course-schedule.app-list');
         Route::get('/course-schedule/{slug}', [CourseScheduleController::class, 'appDetail'])->name('course-schedule.app-detail');
 
